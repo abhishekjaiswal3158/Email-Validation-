@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <title>
+        JQuery
+    </title>
+    <script src="jquery.min.js"></script>
+    <style type="text/css">
+        div {
+            margin: 8px;
+            color: blueviolet;
+            position: relative;
+        }
+        
+        span {
+            position: relative;
+            left: 300px;
+            font-size: 30px;
+            width: 200px;
+        }
+        
+        input {
+            position: absolute;
+            left: 650px;
+            font-size: 30px;
+            width: 400px;
+        }
+        
+        #signIn {
+            position: relative;
+            left: 480px;
+        }
+        
+        p {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div><span>EMAIL</span> <input type="text" id="email" placeholder="eg.abc123@gmail.com"></div>
+    <div><span>PHONE</span><input type="text" id="phone" placeholder="9923xxxxxx"></div>
+    <div><span>PASSWORD</span><input type="password" id="password" placeholder=""></div>
+    <div><span>CONFIRM PASSWORD</span><input type="password" id="conformPassword" placeholder=""></div>
+    <p><input type="button" id="signIn" value="SIGN IN"> </p>
+
+    <p id="info"></p>
+
+    <script type="text/javascript">
+        var error = "";
+        var incom = "";
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+        $("#signIn").click(function() {
+            var count2 = 0;
+            var count1 = 0;
+            if ($("#email").val() == "") {
+                incom = incom + "<p>Email is not entered</p>"
+                count1++;
+            }
+            if ($("#phone").val() == "") {
+                incom = incom + "<p>Phone is not entered</p>"
+                count1++;
+            }
+            if ($("#password").val() == "") {
+                count1++;
+                incom = incom + "<p>Password is not entered</p>"
+            }
+            if ($("#conformPassword").val() == "") {
+                count1++;
+                incom = incom + "<p>Confirm Password is not entered</p>"
+            }
+            if (isEmail($("#email").val()) == false) {
+                count2++;
+                error = error + "<p>Email is not valid</p>";
+            }
+            if ($.isNumeric($("#phone").val()) == false) {
+                count2++;
+                error = error + "<p>Phone number is not valid</p>";
+            }
+            if ($("#password").val() != $("#conformPassword").val()) {
+                count2++;
+                error = error + "<p>Password do not match</p>";
+            }
+            if (count1 > 0) {
+                $("#info").html(incom);
+
+            } else if (count2 > 0) {
+                $("#info").html(error);
+            } else if (count1 == 0 && count2 == 0) {
+                $("#info").css("color", "green");
+                $("#info").html("You've done it! Congratulations.");
+            }
+            error = "";
+            incom = ""
+        });
+    </script>
+</body>
+
+</html>
